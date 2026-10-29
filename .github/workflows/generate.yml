@@ -1,0 +1,30 @@
+name: Generate PNG
+
+on:
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install matplotlib
+        run: pip install matplotlib
+
+      - name: Run Python script
+        run: python generate_png.py
+
+      - name: Upload PNG artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-png
+          path: output.png
+          retention-days: 7
